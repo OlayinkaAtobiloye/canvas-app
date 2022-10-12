@@ -1,0 +1,18 @@
+.panel {
+    width: 20%;
+    padding: 10px;
+    background-color: #fafbfc;
+    height: 100vh;
+   
+}
+
+.shapes{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* svg{
+    height: 40px;
+    width: 40px;
+} */
