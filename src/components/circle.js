@@ -8,8 +8,7 @@ export const Circle = () => {
     };
 
     const handleDragStart = (e) => {
-        console.log("drag start");
-        e.dataTransfer.setData('text', `circle`);
+        e.dataTransfer.setData('shape', "CIRCLE");
     }
 
     return <div draggable className="circle" onDragEnd={handleDragEnd} onDragStart={handleDragStart}><svg xmlns="http://www.w3.org/2000/svg">

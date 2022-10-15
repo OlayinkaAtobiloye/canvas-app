@@ -5,8 +5,7 @@ export const Rectange = () => {
     };
 
     const handleDragStart = (e) => {
-        console.log("drag start");
-        e.dataTransfer.setData('text', `rectangle`);
+        e.dataTransfer.setData('shape', "RECTANGLE");
     }
 
 
