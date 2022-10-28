@@ -167,6 +167,36 @@ const Reducer = (state = initialState, action) => {
                 return {
                     ...action.state
                 }
+            case "DELETE_SHAPE":
+                if (action.shape == "RECTANGLE"){
+                    const newArray = [...state.rectangles]; //making a new array
+                    return {
+                        ...state,
+                        rectangles: newArray.slice(0, action.index).concat(newArray.slice(action.index + 1, newArray.length))
+                    };
+                };
+                if (action.shape == "CIRCLE"){
+                    const newArray = [...state.circles]; //making a new array
+                    return {
+                        ...state,
+                        circles: newArray.slice(0, action.index).concat(newArray.slice(action.index + 1, newArray.length))
+                    };
+                };
+                if (action.shape == "SQUARE"){
+                    const newArray = [...state.squares]; //making a new array
+                    return {
+                        ...state,
+                        squares: newArray.slice(0, action.index).concat(newArray.slice(action.index + 1, newArray.length))
+                    };
+                };
+                if (action.shape == "TRIANGLE"){
+                    const newArray = [...state.triangles]; //making a new array
+                    return {
+                        ...state,
+                        triangles: newArray.slice(0, action.index).concat(newArray.slice(action.index + 1, newArray.length))
+                    };
+            }
+
             
         default:
             return state;

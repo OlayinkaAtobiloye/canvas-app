@@ -98,6 +98,51 @@ const Canvas = (props) => {
 
     }
 
+    const deleteShape= (event, canvas) => {
+        event.preventDefault();
+        console.log("Delete shape")
+        let x, y;
+        y = event.clientY;
+        x = event.clientX;
+        var rect = canvas.getBoundingClientRect();
+        x = x - rect.left;
+        y = y - rect.top;
+        if (event.detail === 2) {
+            // it was a double click
+            for (var i = 0; i < props.rectangles.length; i++) {
+                var b = props.rectangles[i];
+                if (x > b.x && x < b.x+b.w && y > b.y && y < b.y + b.h) {
+                    props.delete(i, "RECTANGLE");
+                }
+            }
+    
+            for (var i = 0; i < props.squares.length; i++) {
+                var b = props.squares[i];
+                if (x > b.x && x < b.x+b.w && y > b.y && y < b.y + b.h) {
+                    props.delete(i, "SQUARE");
+                }
+            }
+    
+            for (var i = 0; i < props.triangles.length; i++) {
+                var b = props.triangles[i];
+                // props.setDraging(i, "TRIANGLE", true);
+                if (x > b.x && x < b.x+b.w && y > b.y && y < b.y + b.h) {
+                    props.delete(i, "TRIANGLE");
+                }
+            }
+    
+            for (var i = 0; i < props.circles.length; i++) {
+                var b = props.circles[i];
+                var dx = b.x - x;
+                var dy = b.y - y;
+                if(dx * dx + dy*dy < b.radius * b.radius){
+                    props.delete(i, "CIRCLE");
+                  }
+          }
+       };
+       socket.emit('send', { state: props.state });
+    }
+
 
 
     const down = (event, canvas) => {
@@ -281,6 +326,7 @@ const Canvas = (props) => {
         onMouseDown={(e) => down(e, ref.current)}
         onMouseMove={(e) => move(e, ref.current)}
         onMouseUp={(e) => up(e, ref.current)}
+        onClick={(e) => deleteShape(e, ref.current)}
         ref={ref}
         ></canvas>
     );
@@ -301,7 +347,8 @@ return {
     createShape: (x, y, shape) => dispatch({ type: "CREATE_SHAPE" , shape: shape, coordinates: {x, y}}),
     moveShape: (x, y, shape, index) => dispatch({ type: "MOVE_SHAPE", shape: shape, index: index, coordinates: {x, y}}),
     setDraging: (index, shape, condition) => dispatch({type: "SET_DRAGING", shape: shape, index: index, condition: condition}),
-    setState: (state) => dispatch({type: "SET_STATE", state: state})
+    setState: (state) => dispatch({type: "SET_STATE", state: state}),
+    delete: (index, shape) => dispatch({type: "DELETE_SHAPE", shape: shape, index: index})
 };
 };
 
